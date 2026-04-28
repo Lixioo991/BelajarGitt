@@ -4,13 +4,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
     public GameState currentState;
-
-    [Header("UI Panels")]
-    [SerializeField] private GameObject mainMenuUI;
-    [SerializeField] private GameObject pauseUI;
-    [SerializeField] private GameObject gameOverUI;
 
     void Awake()
     {
@@ -25,83 +19,57 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        SetState(GameState.MainMenu);
-    }
-
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             if (currentState == GameState.Playing)
+            {
                 PauseGame();
+            }
             else if (currentState == GameState.Paused)
+            {
                 ResumeGame();
-        }
-    }
-
-    public void SetState(GameState newState)
-    {
-        currentState = newState;
-
-        // matikan semua UI dulu
-        if (mainMenuUI != null) mainMenuUI.SetActive(false);
-        if (pauseUI != null) pauseUI.SetActive(false);
-        if (gameOverUI != null) gameOverUI.SetActive(false);
-
-        switch (newState)
-        {
-            case GameState.MainMenu:
-                if (mainMenuUI != null) mainMenuUI.SetActive(true);
-                Time.timeScale = 0f;
-                break;
-
-            case GameState.Playing:
-                Time.timeScale = 1f;
-                break;
-
-            case GameState.Paused:
-                if (pauseUI != null) pauseUI.SetActive(true);
-                Time.timeScale = 0f;
-                break;
-
-            case GameState.GameOver:
-                if (gameOverUI != null) gameOverUI.SetActive(true);
-                Time.timeScale = 0f;
-                break;
+            }
         }
     }
 
     public void StartGame()
     {
-        SetState(GameState.Playing);
+        Time.timeScale = 1f;
+        currentState = GameState.Playing;
+        SceneManager.LoadScene("Game");
     }
 
     public void PauseGame()
     {
-        SetState(GameState.Paused);
+        Time.timeScale = 0f;
+        currentState = GameState.Paused;
     }
 
     public void ResumeGame()
     {
-        SetState(GameState.Playing);
+        Time.timeScale = 1f;
+        currentState = GameState.Playing;
     }
 
     public void GameOver()
     {
-        SetState(GameState.GameOver);
+        Time.timeScale = 0f;
+        currentState = GameState.GameOver;
     }
 
     public void RestartGame()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        currentState = GameState.Playing;
+        SceneManager.LoadScene("Game");
     }
 
     public void BackToMenu()
     {
         Time.timeScale = 1f;
-        SetState(GameState.MainMenu);
+        currentState = GameState.MainMenu;
+        SceneManager.LoadScene("MainMenu");
     }
 }

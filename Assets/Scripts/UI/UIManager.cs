@@ -1,20 +1,55 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
-    public void StartGame()
+    [SerializeField] GameObject mainMenuUI;
+    [SerializeField] GameObject pauseUI;
+    [SerializeField] GameObject gameOverUI;
+
+    void Start()
     {
-        SceneManager.LoadScene("Game");
+        ShowMainMenu();
     }
 
-    public void QuitGame()
+    public void StartGame()
     {
-        Application.Quit();
+        GameManager.Instance.StartGame();
+    }
+
+    public void ShowMainMenu()
+    {
+        mainMenuUI.SetActive(true);
+        pauseUI.SetActive(false);
+        gameOverUI.SetActive(false);
+    }
+
+    public void ShowPause()
+    {
+        mainMenuUI.SetActive(false);
+        pauseUI.SetActive(true);
+        gameOverUI.SetActive(false);
+    }
+
+    public void Resume()
+    {
+        GameManager.Instance.ResumeGame();
+        ShowMainMenu(); // atau hide semua
+    }
+
+    public void ShowGameOver()
+    {
+        mainMenuUI.SetActive(false);
+        pauseUI.SetActive(false);
+        gameOverUI.SetActive(true);
     }
 
     public void Restart()
     {
-        SceneManager.LoadScene("Game");
+        GameManager.Instance.RestartGame();
+    }
+
+    public void Menu()
+    {
+        GameManager.Instance.BackToMenu();
     }
 }
