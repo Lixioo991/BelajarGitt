@@ -13,7 +13,8 @@ public class UIManager : MonoBehaviour
 
     public void StartGame()
     {
-        GameManager.Instance.StartGame();
+        if (GameManager.Instance != null)
+            GameManager.Instance.StartGame();
     }
 
     public void ShowMainMenu()
@@ -32,8 +33,10 @@ public class UIManager : MonoBehaviour
 
     public void Resume()
     {
-        GameManager.Instance.ResumeGame();
-        ShowMainMenu(); // atau hide semua
+        if (GameManager.Instance != null)
+            GameManager.Instance.ResumeGame();
+
+        ShowMainMenu();
     }
 
     public void ShowGameOver()
@@ -45,11 +48,13 @@ public class UIManager : MonoBehaviour
 
     public void Restart()
     {
-        GameManager.Instance.RestartGame();
+        if (GameManager.Instance != null)
+            GameManager.Instance.StartGame();
     }
 
     public void Menu()
     {
-        GameManager.Instance.BackToMenu();
+        if (GameManager.Instance != null)
+            GameManager.Instance.BackToMenu();
     }
 }
