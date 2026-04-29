@@ -51,7 +51,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         currentState = GameState.Paused;
-
         Debug.Log("=== GAME PAUSED ===");
     }
 
@@ -59,16 +58,25 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         currentState = GameState.Playing;
-
         Debug.Log("=== GAME RESUMED ===");
     }
 
+    // 💀 UPDATED GAME OVER
     public void GameOver()
     {
-        Time.timeScale = 0f;
         currentState = GameState.GameOver;
+        Time.timeScale = 1f; // jangan 0 biar scene bisa jalan
 
         Debug.Log("=== GAME OVER ===");
+
+        Invoke("GoToMainMenu", 1.5f);
+    }
+
+    // 🏠 pindah ke main menu
+    void GoToMainMenu()
+    {
+        currentState = GameState.MainMenu;
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void RestartGame()
