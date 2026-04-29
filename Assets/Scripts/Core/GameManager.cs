@@ -19,8 +19,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        currentState = GameState.MainMenu;
+    }
+
     void Update()
     {
+        // tombol P untuk pause / resume
         if (Input.GetKeyDown(KeyCode.P))
         {
             if (currentState == GameState.Playing)
@@ -45,18 +51,24 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
         currentState = GameState.Paused;
+
+        Debug.Log("=== GAME PAUSED ===");
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1f;
         currentState = GameState.Playing;
+
+        Debug.Log("=== GAME RESUMED ===");
     }
 
     public void GameOver()
     {
         Time.timeScale = 0f;
         currentState = GameState.GameOver;
+
+        Debug.Log("=== GAME OVER ===");
     }
 
     public void RestartGame()

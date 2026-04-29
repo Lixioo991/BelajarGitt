@@ -13,15 +13,19 @@ public class PlayerController : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
 
-        // ambil dari Scriptable Object
+        if (playerData == null)
+        {
+            Debug.LogError("PlayerData belum di-assign!");
+            return;
+        }
+
         currentHP = playerData.maxHP;
     }
 
     void Update()
     {
-        if (playerInput == null) return;
+        if (playerInput == null || playerData == null) return;
 
-        // optional: hanya jalan saat Playing
         if (GameManager.Instance.currentState != GameState.Playing)
             return;
 
@@ -50,10 +54,11 @@ public class PlayerController : MonoBehaviour
         currentHP -= dmg;
         currentHP = Mathf.Max(0, currentHP);
 
-        Debug.Log("Player HP: " + currentHP);
+        Debug.Log("HP: " + currentHP);
 
         if (currentHP <= 0)
         {
+            Debug.Log("=== GAME OVER ===");
             GameManager.Instance.GameOver();
         }
     }
