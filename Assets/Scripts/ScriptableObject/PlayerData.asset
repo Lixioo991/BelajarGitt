@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 100
   moveSpeed: 5
-  damagePerSecond: 0.1
+  damagePerSecond: 90
